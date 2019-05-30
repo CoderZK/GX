@@ -54,7 +54,7 @@
 //        }
 //        else
 //        {
-            vc=[[NSClassFromString(str) alloc] initWithTableViewStyle:UITableViewStyleGrouped];
+            vc=[[NSClassFromString(str) alloc] init];
 //        }
         
 

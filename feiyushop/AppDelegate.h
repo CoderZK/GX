@@ -1,9 +1,9 @@
 //
 //  AppDelegate.h
-//  feiyushop
+//  Shop
 //
-//  Created by FY on 2019/2/27.
-//  Copyright © 2019年 张坤. All rights reserved.
+//  Created by 朱啸 on 2018/4/11.
+//  Copyright © 2018年 朱啸. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

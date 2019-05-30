@@ -12,5 +12,11 @@ target 'feiyushop' do
   pod 'FMDB'
   pod "SVProgressHUD"
   pod 'SDCycleScrollView'
+  
+  pod 'UMengUShare/UI'
+  pod 'UMengUShare/Social/Sina'
+  pod 'UMengUShare/Social/WeChat'
+  pod 'UMengUShare/Social/QQ'
+
 
 end

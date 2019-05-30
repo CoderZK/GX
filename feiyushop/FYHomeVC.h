@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FYHomeVC : UIViewController
-
+- (void)getMessage:(NSString *)str;
+@property (nonatomic,strong) UIWebView * webView;
 @end
 
 NS_ASSUME_NONNULL_END

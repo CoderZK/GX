@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		583332A6229FDE69008DD9CF /* UIView+KKEB.m in Sources */ = {isa = PBXBuildFile; fileRef = 583332A4229FDE68008DD9CF /* UIView+KKEB.m */; };
+		583332AA229FDEA2008DD9CF /* libUMessage_Sdk_1.5.0a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 583332A8229FDEA2008DD9CF /* libUMessage_Sdk_1.5.0a.a */; };
 		58700AAB2226712B0022E38D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58700AAA2226712B0022E38D /* AppDelegate.m */; };
 		58700AB12226712B0022E38D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58700AAF2226712B0022E38D /* Main.storyboard */; };
 		58700AB32226712C0022E38D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58700AB22226712C0022E38D /* Assets.xcassets */; };
@@ -100,6 +102,10 @@
 
 /* Begin PBXFileReference section */
 		4B7A7BE0AEFFEBC411929EFC /* libPods-feiyushop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-feiyushop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		583332A4229FDE68008DD9CF /* UIView+KKEB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+KKEB.m"; sourceTree = "<group>"; };
+		583332A5229FDE68008DD9CF /* UIView+KKEB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KKEB.h"; sourceTree = "<group>"; };
+		583332A8229FDEA2008DD9CF /* libUMessage_Sdk_1.5.0a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.5.0a.a; sourceTree = "<group>"; };
+		583332A9229FDEA2008DD9CF /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		58700AA62226712B0022E38D /* feiyushop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = feiyushop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58700AA92226712B0022E38D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		58700AAA2226712B0022E38D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -233,6 +239,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				583332AA229FDEA2008DD9CF /* libUMessage_Sdk_1.5.0a.a in Frameworks */,
 				58700C1822267CF10022E38D /* libsqlite3.0.tbd in Frameworks */,
 				71E2B42AF178F8EF74A2E686 /* libPods-feiyushop.a in Frameworks */,
 			);
@@ -255,6 +262,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		583332A7229FDEA2008DD9CF /* UMessage_Sdk_1.3.0 */ = {
+			isa = PBXGroup;
+			children = (
+				583332A8229FDEA2008DD9CF /* libUMessage_Sdk_1.5.0a.a */,
+				583332A9229FDEA2008DD9CF /* UMessage.h */,
+			);
+			path = UMessage_Sdk_1.3.0;
+			sourceTree = "<group>";
+		};
 		58700A9D2226712B0022E38D = {
 			isa = PBXGroup;
 			children = (
@@ -280,6 +296,7 @@
 		58700AA82226712B0022E38D /* feiyushop */ = {
 			isa = PBXGroup;
 			children = (
+				583332A7229FDEA2008DD9CF /* UMessage_Sdk_1.3.0 */,
 				58794A2C222CAEB900FA8631 /* Home */,
 				587949F4222CAEB800FA8631 /* LoginAndRegist */,
 				587949FB222CAEB800FA8631 /* FYMine */,
@@ -290,6 +307,8 @@
 				587949B4222CAE1E00FA8631 /* FYbase */,
 				58700AA92226712B0022E38D /* AppDelegate.h */,
 				58700AAA2226712B0022E38D /* AppDelegate.m */,
+				583332A5229FDE68008DD9CF /* UIView+KKEB.h */,
+				583332A4229FDE68008DD9CF /* UIView+KKEB.m */,
 				58794A60222CAF0100FA8631 /* TabBarController.h */,
 				58794A5F222CAF0000FA8631 /* TabBarController.m */,
 				587949B3222CADE300FA8631 /* Header.pch */,
@@ -731,21 +750,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-feiyushop/Pods-feiyushop-resources.sh",
-				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
-				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
-				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-feiyushop/Pods-feiyushop-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-feiyushop/Pods-feiyushop-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-feiyushop/Pods-feiyushop-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-feiyushop/Pods-feiyushop-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F591908138066E8FB5BF71E /* [CP] Check Pods Manifest.lock */ = {
@@ -782,6 +796,7 @@
 				58794ABA222CB46800FA8631 /* FYSignleTool.m in Sources */,
 				58794AB0222CB31F00FA8631 /* FYGouWuChe.m in Sources */,
 				58794A97222CB2EE00FA8631 /* FYLoginVC.m in Sources */,
+				583332A6229FDE69008DD9CF /* UIView+KKEB.m in Sources */,
 				587949C9222CAE1F00FA8631 /* BaseViewController+PublicMethod.m in Sources */,
 				58794A67222CB1EA00FA8631 /* FYGoodDetailTVC.m in Sources */,
 				58700C1322267AC40022E38D /* FYCarVC.m in Sources */,
@@ -1002,6 +1017,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/feiyushop/UMessage_Sdk_1.3.0",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ffyy.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = ffyydev;
@@ -1024,6 +1043,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/feiyushop/UMessage_Sdk_1.3.0",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ffyy.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
