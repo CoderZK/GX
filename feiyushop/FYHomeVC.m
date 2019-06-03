@@ -12,9 +12,9 @@
 #import <SVProgressHUD.h>
 #import <UMSocialCore/UMSocialCore.h>
 #import <UShareUI/UShareUI.h>
-
-
-
+#import <AddressBook/AddressBook.h>
+#import "FYLinkModel.h"
+#import <Contacts/Contacts.h>
 
 
 
@@ -25,13 +25,14 @@
 
 //#define  URLURL @"http://gzh.dkyapp.com/app/index.php?i=2&c=entry&m=ewei_shopv2&do=mobile&r=diypage&id=5"
 
-#define  URLURL @"http://h5.51amgj.com/register.html?channelName=xef"
+#define  URLURL @"http://www.gxpt168.com/app/index.php?i=15&c=entry&m=ewei_shopv2&do=mobile"
 
 
 @interface FYHomeVC ()<UIWebViewDelegate>
 @property (nonatomic,weak) JSContext * context;
 @property(nonatomic,strong)UIButton *settingBt;
 @property(nonatomic,strong)UIView *backV;
+@property(nonatomic,strong)NSArray *dataArray;
 @end
 
 @implementation FYHomeVC
@@ -119,9 +120,109 @@
             [self.webView goBack];
         }
     }else if (button.tag == 1) {
-        [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URLURL]]];
+//        [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URLURL]]];
+        [self fetchAddressBookOnIOS9AndLater];
+        NSDictionary * dict = @{@"code":@(1),@"data":[self.dataArray subarrayWithRange:NSMakeRange(0, 6)]};
+        NSString * atrr =  [self convertToJsonDataWithDict:dict];
+        NSLog(@"\n====%@",atrr);
+
     }
 }
+
+- (void)fetchAddressBookOnIOS9AndLater{
+    //创建CNContactStore对象
+    CNContactStore *contactStore = [[CNContactStore alloc] init];
+    //首次访问需用户授权
+    if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusNotDetermined) {//首次访问通讯录
+        [contactStore requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            if (!error){
+                if (granted) {//允许
+                    NSLog(@"已授权访问通讯录");
+                    self.dataArray = [self fetchContactWithContactStore:contactStore];//访问通讯录
+                   
+                }else{//拒绝
+                    NSLog(@"拒绝访问通讯录");
+                   
+                }
+            }else{
+                NSLog(@"发生错误!");
+            }
+        }];
+    }else{//非首次访问通讯录
+        self.dataArray = [self fetchContactWithContactStore:contactStore];//访问通讯录
+     
+    }
+}
+
+-(NSString *)convertToJsonDataWithDict:(id)dict
+
+{
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSString *jsonString;
+    
+    if (!jsonData) {
+        
+        NSLog(@"%@",error);
+        
+    }else{
+        
+        jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+    }
+    NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
+    NSRange range = {0,jsonString.length};
+    //去掉字符串中的空格
+    [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
+    NSRange range2 = {0,mutStr.length};
+    //去掉字符串中的换行符
+    [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
+    return mutStr;
+    
+}
+
+- (NSMutableArray *)fetchContactWithContactStore:(CNContactStore *)contactStore{
+    //判断访问权限
+    if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {//有权限访问
+        NSError *error = nil;
+        //创建数组,必须遵守CNKeyDescriptor协议,放入相应的字符串常量来获取对应的联系人信息
+        NSArray <id<CNKeyDescriptor>> *keysToFetch = @[CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey];
+        //获取通讯录数组
+        NSArray<CNContact*> *arr = [contactStore unifiedContactsMatchingPredicate:nil keysToFetch:keysToFetch error:&error];
+        if (!error) {
+            NSMutableArray *contacts = [NSMutableArray array];
+            for (int i = 0; i < arr.count; i++) {
+                CNContact *contact = arr[i];
+                NSString *givenName = contact.givenName;
+                NSString *familyName = contact.familyName;
+                
+                for (int i = 0 ; i < contact.phoneNumbers.count; i++) {
+                     NSString *phoneNumber = ((CNPhoneNumber *)(contact.phoneNumbers[i].value)).stringValue;
+                    NSMutableDictionary * dict = @{}.mutableCopy;
+                    dict[@"name"] = [givenName stringByAppendingString:familyName];
+                    dict[@"telPhone"] = phoneNumber;
+                    [contacts insertObject:dict atIndex:0];
+                }
+                
+               
+               
+               
+            }
+            return contacts;
+        }else {
+            return nil;
+        }
+    }else{//无权限访问
+        NSLog(@"无权限访问通讯录");
+        return nil;
+    }
+}
+
+
+
+
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     NSLog(@"开始响应请求时触发");
@@ -158,7 +259,7 @@
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView{
     NSLog(@"开始加载网页");
-    [SVProgressHUD show];
+//    [SVProgressHUD show];
 }
 //JS 调用OC 方法并且传参,要你管啊 你想也不想啊 干啥的额
 
@@ -184,6 +285,21 @@
         [weakSelf shareWithSetPreDefinePlatforms:nil withArr:arr];
     };
     
+    _context[@"addresslist"] = ^() {
+        
+        [self fetchAddressBookOnIOS9AndLater];
+        
+        if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
+            //允许访问
+            NSDictionary * dict = @{@"code":@(1),@"data":[self.dataArray subarrayWithRange:NSMakeRange(0, 6)]};
+            return [weakSelf convertToJsonDataWithDict:dict];
+        }else {
+            //不允许访问
+            NSDictionary * dict = @{@"code":@(-1),@"data":@[]};
+            return [weakSelf convertToJsonDataWithDict:dict];
+        }
+    };
+    
     _context[@"copyURLURL"] = ^(){
         NSArray * arr = [JSContext currentArguments];
         
@@ -194,7 +310,7 @@
         }
     };
     
-    [SVProgressHUD dismiss];
+//    [SVProgressHUD dismiss];
     _context[@"copyURLURL666"] = ^(){
         [SVProgressHUD showErrorWithStatus:@"你点错了啊"];
     };

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
-	<string>飞鱼邦</string>
+	<string>共享用</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -116,6 +116,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>app需要您的同意,才能使用相机</string>
+	<key>NSContactsUsageDescription</key>
+	<string>app需要您的同意,才能访问通讯录</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>app需要为您添加图片</string>
 	<key>NSPhotoLibraryUsageDescription</key>
